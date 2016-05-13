@@ -65,22 +65,8 @@
     <bean id="customFieldDefinitionDAO" class="com.msc.customFields.dataAccess.CustomFieldDefinitionDAOImpl">
     </bean>
 
-    <bean id="cfDefCacheLoader" class="com.msc.customFields.manager.CustomFieldDefinitionCacheLoader">
-        <property name="dao" ref="customFieldDefinitionDAO"/>
-    </bean>
-    <bean id="cfDefCacheManager" class="com.msc.cache.CacheManager" init-method="init">
-        <!-- depending which Cleanup policy you want, set one of the following -->
-        <!-- setting both defaultIdleTime and DefaultTimeToLive, will automatically hook expriedCleanUpPolicy.  -->
-        <!-- setting defaultIdleTime, will automatically hook  idleTimeCleanupPolicy -->
-        <property name="defaultIdleTime" value="15"/>
-        <property name="loaderPolicy" ref="cfDefCacheLoader"/>
-        <!-- IF all values should be loaded before hand, use the initialization policy below -->
-        <!--<property name="initializerPolicy" ref="fullInitializationPolicy"/>-->
-    </bean>
-
     <bean id="customFieldDefinitionManager" class="com.msc.customFields.manager.CustomFieldDefinitionManagerImpl">
         <property name="dao" ref="customFieldDefinitionDAO"/>
-        <property name="cacheManager" ref="cfDefCacheManager"/>
     </bean>
 
 

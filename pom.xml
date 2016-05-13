@@ -44,11 +44,7 @@
             <artifactId>commons</artifactId>
             <version>1.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.msc.components</groupId>
-            <artifactId>QuickCache</artifactId>
-            <version>1.0</version>
-        </dependency>
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>

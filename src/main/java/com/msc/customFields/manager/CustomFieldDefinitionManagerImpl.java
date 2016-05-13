@@ -1,9 +1,7 @@
 package com.msc.customFields.manager;
 
-import com.msc.cache.CacheManager;
-import com.msc.customFields.dataAccess.CustomFieldDefinitionDAO;
-import com.msc.customFields.CustomFieldDefGroupKey;
 import com.msc.customFields.CustomFieldDefinition;
+import com.msc.customFields.dataAccess.CustomFieldDefinitionDAO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,14 +21,12 @@ import java.util.Collection;
 public class CustomFieldDefinitionManagerImpl implements CustomFieldDefinitionManager {
 
     //IoC
-    private CacheManager cacheManager;
     private CustomFieldDefinitionDAO dao;
 
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomFieldDefinition save(CustomFieldDefinition newValue) {
         newValue = dao.save(newValue);
         //Invalidate group cache for the OnwerID of the newly added CustomField.
-        cacheManager.invalidate(newValue);
         return newValue;
     }
 
@@ -40,14 +36,12 @@ public class CustomFieldDefinitionManagerImpl implements CustomFieldDefinitionMa
     }
 
     public Collection findByOwnerIdAndClass(Long ownerId, String clazz) throws Exception {
-        CustomFieldDefGroupKey key = new CustomFieldDefGroupKey(ownerId, clazz);
-		return cacheManager.getByGroup(key);
+		return dao.findByOwnerAndClass(ownerId, clazz);
 	}
 
 
     public CustomFieldDefinition findByPrimaryKey(long pk) throws Exception {
-        return (CustomFieldDefinition) cacheManager.get(pk);
-        //return dao.findByPrimaryKey(pk)       ;
+        return (CustomFieldDefinition) dao.findByPrimaryKey(pk);
     }
 //	public long findUsagesOf(Long customFieldDefPk) throws ApplicationException, BusinessException {
 //		return ((CustomFieldDefinitionDAO)this.getDAO()).getUsagesOf(customFieldDefPk);
@@ -58,7 +52,4 @@ public class CustomFieldDefinitionManagerImpl implements CustomFieldDefinitionMa
         this.dao = dao;
     }
 
-    public void setCacheManager(CacheManager cacheManager) {
-        this.cacheManager = cacheManager;
-    }
-}
+ }

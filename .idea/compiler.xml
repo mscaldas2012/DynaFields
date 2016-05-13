@@ -27,6 +27,8 @@
         <module name="DynaFields" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="DynaFields" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
-

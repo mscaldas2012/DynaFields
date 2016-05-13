@@ -152,7 +152,7 @@ public class CustomFieldDefinitionTest {
 
     private CustomFieldDefinition createCustomFieldDefinition() {
         CustomFieldDefinition def = new CustomFieldDefinition();
-        def.setOwnerId(123l);
+        def.setFormId(123l);
         def.setClazz("TEST");
         def.setScope("Category=xyz&SubCategory=abc");
         def.setName("Test List Field");

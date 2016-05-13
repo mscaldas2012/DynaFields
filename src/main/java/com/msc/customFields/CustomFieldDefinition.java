@@ -1,6 +1,5 @@
 package com.msc.customFields;
 
-import com.msc.cache.GroupCacheable;
 import com.msc.customFields.dataAccess.AuditTrailImpl;
 
 import javax.persistence.*;
@@ -8,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * <p/>
+ * <p>This is the main class that Defines the metadata for a Custom Field!
  * </P>
  * <p/>
  * <p/>
@@ -20,7 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name="CUSTOM_FIELD_DEFINITION")
 //@PrimaryKeyJoinColumn(name="id")
-public class CustomFieldDefinition extends AuditTrailImpl implements GroupCacheable {
+public class CustomFieldDefinition extends AuditTrailImpl  {
     @Id
     @Column (name="id")
     @TableGenerator(
@@ -35,9 +34,9 @@ public class CustomFieldDefinition extends AuditTrailImpl implements GroupCachea
 
     /** The reason to have Custom fields is because different "owners" might have different data to collect. */
     //Owner is defined outside the scope of this framework, but is mandatory.
-    @Column(name="owner_id", nullable = false, updatable = false)
-    private long ownerId;
-    /** This property identifies which class this definition should be attached to. This is not for reflexion purposes.
+    @Column(name="form_id", nullable = false, updatable = false)
+    private long formId;
+    /** This property identifies which class this definition should be attached to. This is not for reflection purposes.
         It can be set to any value. It's used just as an identifier of which class this definition is associated with. */
     @Column(name="class", nullable = false)
     private String clazz;
@@ -47,6 +46,7 @@ public class CustomFieldDefinition extends AuditTrailImpl implements GroupCachea
        But it should represent a FK of sorts to a scope defined by the user of this framework. */
     @Column(name="scope")
     private String scope;
+
 	/** The sequence of how the custom fields should be presented to the user. */
     @Column(name="sequence")
 	private Long sequence = 0L;
@@ -146,12 +146,12 @@ public class CustomFieldDefinition extends AuditTrailImpl implements GroupCachea
     public static final int TABLE_FORMAT = 1;
 	public static final int FORM_FORMAT = 2;
 
-    public long getOwnerId() {
-        return ownerId;
+    public long getFormId() {
+        return formId;
     }
 
-    public void setOwnerId(long ownerId) {
-        this.ownerId = ownerId;
+    public void setFormId(long formId) {
+        this.formId = formId;
     }
 
     public String getClazz() {
@@ -372,7 +372,7 @@ public class CustomFieldDefinition extends AuditTrailImpl implements GroupCachea
 		final StringBuilder sb = new StringBuilder();
 		sb.append("CustomFieldDefinition");
 		sb.append("{pk=").append(this.getPk());
-        sb.append(", owner='").append(this.getOwnerId()).append('\'');
+        sb.append(", owner='").append(this.getFormId()).append('\'');
         sb.append(", Class='").append(clazz).append('\'');
         sb.append(", scope=").append(this.getScope());
 		sb.append(", name='").append(name).append('\'');
